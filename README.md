@@ -1,5 +1,16 @@
 # Fishing Lab
 
+## Submission Details
+
+| | |
+|---|---|
+| **Name** | Rhea Sushanth |
+| **SRN** | PES1UG24CS371 |
+| **Lab** | Lab 4 - VibeCoding |
+| **LLM chat link** | https://claude.ai/share/b4b4d8b8-45ad-48de-ad29-02ba8489a772 |
+
+---
+
 This project is a single-topic Fishing-lite game using **Pygame**. It
 introduces students to timed casting mechanics, overlap-based catch
 detection, and stateful entity variety, using a small, readable
@@ -36,18 +47,19 @@ and more interesting.
 1. Make sure you have Python 3.10+ installed.
 2. Install dependencies:
 
-```bash
+```
 pip install -r requirements.txt
 ```
 
 3. Run the game:
 
-```bash
+```
 python main.py
 ```
 
-**Controls:** Currently none - the hook casts and retracts on its own
-in a loop. That changes once you complete Task 3.
+**Controls:**
+- **SPACE** - cast the hook (only when the hook is idle at the surface)
+- **R** - start a new round after time is up
 
 ---
 
@@ -67,6 +79,11 @@ suggestions and your critical code review.
 > through its depth. Fix the check so it's based on the hook and fish
 > actually overlapping, not just being at a similar depth.
 
+**✅ What I did:** `check_catch` now uses the existing `get_rect()`
+methods and checks `hook.get_rect().colliderect(fish.get_rect())`, so
+a fish is caught only when the hook and fish actually overlap, not just
+when they are at a similar depth.
+
 ### Task 2: Implement multiple fish types
 
 > Introduce at least two fish types that differ in movement speed and
@@ -74,6 +91,17 @@ suggestions and your critical code review.
 > high-value one). Give each type its own look (color and/or size) so
 > they're visually distinguishable, and make sure the correct point
 > value is awarded when each type is caught.
+
+**✅ What I did:** Added three fish types in `GameEngine`:
+
+| Type   | Speed        | Size   | Points | Color  |
+|--------|--------------|--------|--------|--------|
+| Minnow | Slow (1.5)   | Small  | 5      | Green  |
+| Trout  | Medium (2.5) | Medium | 15     | Blue   |
+| Tuna   | Fast (4)     | Big    | 40     | Orange |
+
+Each fish's `point_value` is added to the score when it is landed at
+the surface.
 
 ### Task 3: Implement player-controlled casting
 
@@ -84,6 +112,12 @@ suggestions and your critical code review.
 > fish. A new cast should not be able to interrupt one that's already
 > in progress.
 
+**✅ What I did:** Removed the auto-cast from `GameEngine.update()` and
+added a `try_cast()` method that starts a cast only when the hook is
+`IDLE` and no fish is still being reeled in. In `main.py`, a
+`KEYDOWN` event for `K_SPACE` calls `try_cast()`, so pressing SPACE
+during a cast does nothing.
+
 ### Task 4: Implement a 30-second round timer
 
 > Add a 30-second countdown for the round. Display the remaining time
@@ -91,6 +125,13 @@ suggestions and your critical code review.
 > possible, the round should end, and the final score should be shown
 > clearly. Provide a way to start a new round with the score and timer
 > both reset.
+
+**✅ What I did:** Added a 30-second timer (counted in frames at 60 FPS)
+shown on screen under the score. When it reaches 0, `update()` stops
+running, so no more casts or catches happen, and a
+"Time's up! Final Score: X" banner is shown. Pressing **R** after the
+round ends calls a new `reset()` method, which restores the fish, hook,
+score and timer for a fresh round.
 
 ---
 
@@ -130,8 +171,6 @@ fishing/
 
 ## Submission Checklist
 
-Submission is only the following three things:
-
-- [ ] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior
-- [ ] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working
-- [ ] The Chat/LLM used page link, with the complete chat history
+- [x] A 10-second video of gameplay **before** your changes, showing the bug/broken behavior
+- [x] A 10-second video of gameplay **after** your changes, showing the bug fixed and the new features working
+- [x] The Chat/LLM used page link, with the complete chat history
