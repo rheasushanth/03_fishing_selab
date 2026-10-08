@@ -19,9 +19,13 @@ class GameEngine:
     def __init__(self):
         self.hook = Hook(x=WIDTH / 2, surface_y=SURFACE_Y, max_depth_y=MAX_DEPTH_Y, speed=5)
         self.fish_list = [
-            Fish(x=100, y=180, speed=2, point_value=10, color=(80, 180, 220)),
-            Fish(x=400, y=280, speed=-2, point_value=10, color=(80, 180, 220)),
-            Fish(x=250, y=380, speed=3, point_value=10, color=(80, 180, 220)),
+            # Minnow: slow, small, low value
+            Fish(x=100, y=180, speed=1.5, width=24, height=12, point_value=5, color=(150, 200, 120)),
+            Fish(x=400, y=280, speed=-1.5, width=24, height=12, point_value=5, color=(150, 200, 120)),
+            # Trout: medium speed, medium size, medium value
+            Fish(x=250, y=330, speed=2.5, width=36, height=18, point_value=15, color=(80, 180, 220)),
+            # Tuna: fast, big, high value
+            Fish(x=300, y=400, speed=-4, width=54, height=26, point_value=40, color=(220, 120, 60)),
         ]
         self.hooked_fish = None
         self.score = 0
